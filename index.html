@@ -2,189 +2,435 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Operational Intelligence Advisor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Klarity Operational Intelligence Advisor</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f8;
-      color: #111;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.5;
+    :root {
+      --bg: #f6efe9;
+      --card: #fffaf7;
+      --card-2: #fff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --line: #eadfd8;
+      --accent: #1f1f1f;
+      --accent-soft: #f3d7cf;
+      --badge-bg: #f7e6df;
+      --badge-text: #7a3e2d;
+      --shadow: 0 8px 24px rgba(0,0,0,0.06);
+      --radius: 16px;
     }
-    .card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    h1 {
-      margin: 0 0 8px 0;
-      font-size: 32px;
-    }
-    .sub {
-      margin: 0 0 24px 0;
-      color: #555;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin: 14px 0 6px;
-    }
-    input, select, button {
-      font-size: 16px;
-    }
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
+
+    * {
       box-sizing: border-box;
     }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, #f5b19d 0%, rgba(245,177,157,0.0) 26%),
+        radial-gradient(circle at bottom left, #ead6d2 0%, rgba(234,214,210,0.0) 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+
+    .shell {
+      background: rgba(255,255,255,0.64);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 8px 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .wordmark {
+      font-size: 26px;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #efc5b8;
+      white-space: nowrap;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fffaf7 0%, #fff 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .hero-top {
+      padding: 26px 26px 14px;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,0.75), rgba(255,255,255,0.9)),
+        linear-gradient(135deg, #f9ded4 0%, #f7c7b7 30%, #d7bfd4 68%, #8a5073 100%);
+    }
+
+    .hero-top h1 {
+      margin: 0 0 8px;
+      font-size: 42px;
+      line-height: 1.02;
+      max-width: 700px;
+    }
+
+    .hero-top p {
+      margin: 0;
+      color: #4f4f4f;
+      font-size: 16px;
+      max-width: 700px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 18px;
+      padding: 20px;
+    }
+
+    .panel {
+      background: var(--card-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #2c2c2c;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid #d9d0ca;
+      background: #fffdfa;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #c98d78;
+      box-shadow: 0 0 0 3px rgba(201,141,120,0.12);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
     button {
-      margin-top: 18px;
-      padding: 12px 18px;
       border: none;
-      border-radius: 10px;
-      background: #111;
-      color: #fff;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform 0.05s ease, opacity 0.15s ease;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .secondary {
+      background: #f4ece6;
+      color: #3c3c3c;
+      border: 1px solid #e3d8d0;
+    }
+
+    .helper {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fff5ef;
+      border: 1px solid #f0d5c9;
+      color: #744536;
+      font-size: 14px;
       font-weight: 600;
     }
-    button:hover {
-      opacity: 0.92;
-    }
+
     .output {
-      margin-top: 28px;
       display: none;
+      gap: 12px;
+      flex-direction: column;
     }
-    .section {
-      margin-bottom: 18px;
+
+    .result-card {
+      background: linear-gradient(180deg, #fff 0%, #fff9f6 100%);
+      border: 1px solid var(--line);
+      border-radius: 14px;
       padding: 16px;
-      background: #fafafa;
-      border: 1px solid #ececec;
-      border-radius: 10px;
     }
-    .section h3 {
-      margin: 0 0 8px 0;
-      font-size: 18px;
+
+    .result-card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
     }
-    .muted {
-      color: #666;
-      font-size: 14px;
+
+    .result-card p, .result-card li {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #222;
     }
-    ul {
+
+    .result-card ul {
       margin: 8px 0 0 18px;
       padding: 0;
     }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #777;
+      text-align: right;
+    }
+
+    .tiny {
+      font-size: 12px;
+      color: #7b7b7b;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-top h1 {
+        font-size: 34px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>Operational Intelligence Advisor</h1>
-    <p class="sub">Concept demo: translating Klarity positioning into real deal narratives.</p>
-
-    <label for="company">Company</label>
-    <input id="company" type="text" placeholder="e.g. DoorDash" />
-
-    <label for="industry">Industry</label>
-    <select id="industry">
-      <option>Finance</option>
-      <option>RevOps</option>
-      <option>Operations</option>
-      <option>Enterprise IT</option>
-    </select>
-
-    <label for="scenario">Current environment</label>
-    <select id="scenario">
-      <option value="consultants">Consultants + ServiceNow</option>
-      <option value="bi">BI + dashboards</option>
-      <option value="transformation">Consulting-led transformation</option>
-    </select>
-
-    <button onclick="generateOutput()">Generate narrative</button>
-
-    <div id="output" class="output">
-      <div class="section">
-        <h3>What’s actually broken</h3>
-        <div id="broken"></div>
+  <div class="wrap">
+    <div class="shell">
+      <div class="topbar">
+        <div class="brand">
+          <div class="wordmark">KLARITY</div>
+        </div>
+        <div class="badge">Concept demo</div>
       </div>
 
-      <div class="section">
-        <h3>Klarity narrative</h3>
-        <div id="narrative"></div>
+      <div class="hero">
+        <div class="hero-top">
+          <h1>Operational Intelligence Advisor</h1>
+          <p>Translate company context into a deal-ready Klarity narrative in seconds.</p>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <h2>Company context</h2>
+
+            <label for="company">Company</label>
+            <input id="company" type="text" placeholder="e.g. DoorDash" />
+
+            <label for="industry">Industry</label>
+            <select id="industry">
+              <option>Finance</option>
+              <option>RevOps</option>
+              <option>Operations</option>
+              <option>Enterprise IT</option>
+            </select>
+
+            <label for="scenario">Current environment</label>
+            <select id="scenario">
+              <option value="consultants">Consultants + ServiceNow</option>
+              <option value="bi">BI + dashboards</option>
+              <option value="transformation">Consulting-led transformation</option>
+            </select>
+
+            <div class="button-row">
+              <button class="primary" onclick="generateOutput()">Generate narrative</button>
+              <button class="secondary" onclick="loadExample()">Try example</button>
+            </div>
+
+            <div id="loading" class="loading">
+              Analyzing operational blind spots...
+            </div>
+
+            <div class="helper">
+              Built to test how Klarity’s positioning can show up in real deals.
+            </div>
+          </div>
+
+          <div class="panel">
+            <div id="output" class="output">
+              <div class="result-card">
+                <h3>What’s actually broken</h3>
+                <p id="broken"></p>
+              </div>
+
+              <div class="result-card">
+                <h3>Klarity narrative</h3>
+                <p id="narrative"></p>
+              </div>
+
+              <div class="result-card">
+                <h3>What a rep should say</h3>
+                <p id="talktrack"></p>
+              </div>
+
+              <div class="result-card">
+                <h3>Trap question</h3>
+                <p id="question"></p>
+              </div>
+
+              <div class="result-card">
+                <h3>Why Klarity wins</h3>
+                <div id="wins"></div>
+              </div>
+            </div>
+
+            <div id="emptyState" class="helper" style="margin-top:0;">
+              Generate a scenario to see how Klarity’s narrative can be translated into a live deal motion.
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="section">
-        <h3>What a rep should say</h3>
-        <div id="talktrack"></div>
-      </div>
-
-      <div class="section">
-        <h3>Trap question</h3>
-        <div id="question"></div>
-      </div>
-
-      <div class="section">
-        <h3>Why Klarity wins</h3>
-        <div id="wins"></div>
+      <div class="footer-note">
+        Built independently by Pratyusha Endula as a PMM concept prototype.
       </div>
     </div>
   </div>
 
   <script>
-    function generateOutput() {
-      const scenario = document.getElementById('scenario').value;
-      const company = document.getElementById('company').value || 'this team';
+    function getContent(company, scenario) {
+      const name = company && company.trim() ? company.trim() : "this team";
 
-      const content = {
+      return {
         consultants: {
-          broken: `${company} likely has static process maps, but no live visibility into how work actually happens across systems.`,
+          broken: `${name} likely has static process maps, but no live visibility into how work actually happens across systems.`,
           narrative: `Klarity doesn’t assume workflows. It reveals how work actually happens and continuously improves it.`,
           talktrack: `Most teams think they understand their processes until they actually see them. Klarity makes that visible without months of consulting.`,
           question: `When was the last time your process map changed based on real usage data?`,
           wins: [
-            'Consultants are slow and static',
-            'ServiceNow assumes workflows',
-            'Klarity continuously discovers and improves them'
+            "Consultants are slow and static",
+            "ServiceNow assumes workflows",
+            "Klarity continuously discovers and improves them"
           ]
         },
         bi: {
-          broken: `${company} may have visibility into metrics, but not into how work actually flows across teams and tools.`,
+          broken: `${name} likely has visibility into metrics, but not into how work actually flows across teams and systems.`,
           narrative: `Klarity goes beyond dashboards to reveal how work actually happens and where it breaks.`,
           talktrack: `Dashboards tell you what happened. Klarity shows how it happened and where to improve it.`,
           question: `When a KPI drops, how do you trace it back to the actual workflow causing it?`,
           wins: [
-            'BI stops at visibility',
-            'Klarity reveals execution',
-            'Klarity connects workflows, not just metrics'
+            "BI tools stop at visibility",
+            "Klarity reveals execution",
+            "Klarity connects workflows, not just metrics"
           ]
         },
         transformation: {
-          broken: `${company} may be relying on one-time consulting snapshots while operations continue changing underneath them.`,
+          broken: `${name} may be relying on one-time consulting snapshots while operations continue changing underneath them.`,
           narrative: `Klarity replaces static analysis with continuous operational intelligence.`,
           talktrack: `Consultants give you a snapshot. Klarity gives you a live system. Your operations change constantly, so your intelligence should too.`,
           question: `How often do your process insights stay relevant after a consulting engagement ends?`,
           wins: [
-            'Consulting is periodic',
-            'Klarity is continuous',
-            'Consulting is expensive, Klarity compounds'
+            "Consulting is periodic",
+            "Klarity is continuous",
+            "Consulting is expensive, Klarity compounds"
           ]
         }
-      };
+      }[scenario];
+    }
 
-      const selected = content[scenario];
+    function renderOutput(data) {
+      document.getElementById("broken").textContent = data.broken;
+      document.getElementById("narrative").textContent = data.narrative;
+      document.getElementById("talktrack").textContent = data.talktrack;
+      document.getElementById("question").textContent = data.question;
+      document.getElementById("wins").innerHTML =
+        "<ul>" + data.wins.map(item => `<li>${item}</li>`).join("") + "</ul>";
 
-      document.getElementById('broken').textContent = selected.broken;
-      document.getElementById('narrative').textContent = selected.narrative;
-      document.getElementById('talktrack').textContent = selected.talktrack;
-      document.getElementById('question').textContent = selected.question;
-      document.getElementById('wins').innerHTML = '<ul>' + selected.wins.map(item => `<li>${item}</li>`).join('') + '</ul>';
+      document.getElementById("output").style.display = "flex";
+      document.getElementById("emptyState").style.display = "none";
+    }
 
-      document.getElementById('output').style.display = 'block';
+    function generateOutput() {
+      const company = document.getElementById("company").value;
+      const scenario = document.getElementById("scenario").value;
+      const loading = document.getElementById("loading");
+
+      loading.style.display = "block";
+      document.getElementById("output").style.display = "none";
+
+      setTimeout(() => {
+        const data = getContent(company, scenario);
+        renderOutput(data);
+        loading.style.display = "none";
+      }, 600);
+    }
+
+    function loadExample() {
+      document.getElementById("company").value = "DoorDash";
+      document.getElementById("industry").value = "RevOps";
+      document.getElementById("scenario").value = "consultants";
+      generateOutput();
     }
   </script>
 </body>
