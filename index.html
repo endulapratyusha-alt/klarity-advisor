@@ -1,19 +1,191 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operational Intelligence Advisor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f8;
+      color: #111;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.5;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+    }
+    .sub {
+      margin: 0 0 24px 0;
+      color: #555;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 14px 0 6px;
+    }
+    input, select, button {
+      font-size: 16px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 18px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      opacity: 0.92;
+    }
+    .output {
+      margin-top: 28px;
+      display: none;
+    }
+    .section {
+      margin-bottom: 18px;
+      padding: 16px;
+      background: #fafafa;
+      border: 1px solid #ececec;
+      border-radius: 10px;
+    }
+    .section h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+    .muted {
+      color: #666;
+      font-size: 14px;
+    }
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Klarity Advisor&lt;/title&gt;</p>
+  <div class="card">
+    <h1>Operational Intelligence Advisor</h1>
+    <p class="sub">Concept demo: translating Klarity positioning into real deal narratives.</p>
+
+    <label for="company">Company</label>
+    <input id="company" type="text" placeholder="e.g. DoorDash" />
+
+    <label for="industry">Industry</label>
+    <select id="industry">
+      <option>Finance</option>
+      <option>RevOps</option>
+      <option>Operations</option>
+      <option>Enterprise IT</option>
+    </select>
+
+    <label for="scenario">Current environment</label>
+    <select id="scenario">
+      <option value="consultants">Consultants + ServiceNow</option>
+      <option value="bi">BI + dashboards</option>
+      <option value="transformation">Consulting-led transformation</option>
+    </select>
+
+    <button onclick="generateOutput()">Generate narrative</button>
+
+    <div id="output" class="output">
+      <div class="section">
+        <h3>What’s actually broken</h3>
+        <div id="broken"></div>
+      </div>
+
+      <div class="section">
+        <h3>Klarity narrative</h3>
+        <div id="narrative"></div>
+      </div>
+
+      <div class="section">
+        <h3>What a rep should say</h3>
+        <div id="talktrack"></div>
+      </div>
+
+      <div class="section">
+        <h3>Trap question</h3>
+        <div id="question"></div>
+      </div>
+
+      <div class="section">
+        <h3>Why Klarity wins</h3>
+        <div id="wins"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateOutput() {
+      const scenario = document.getElementById('scenario').value;
+      const company = document.getElementById('company').value || 'this team';
+
+      const content = {
+        consultants: {
+          broken: `${company} likely has static process maps, but no live visibility into how work actually happens across systems.`,
+          narrative: `Klarity doesn’t assume workflows. It reveals how work actually happens and continuously improves it.`,
+          talktrack: `Most teams think they understand their processes until they actually see them. Klarity makes that visible without months of consulting.`,
+          question: `When was the last time your process map changed based on real usage data?`,
+          wins: [
+            'Consultants are slow and static',
+            'ServiceNow assumes workflows',
+            'Klarity continuously discovers and improves them'
+          ]
+        },
+        bi: {
+          broken: `${company} may have visibility into metrics, but not into how work actually flows across teams and tools.`,
+          narrative: `Klarity goes beyond dashboards to reveal how work actually happens and where it breaks.`,
+          talktrack: `Dashboards tell you what happened. Klarity shows how it happened and where to improve it.`,
+          question: `When a KPI drops, how do you trace it back to the actual workflow causing it?`,
+          wins: [
+            'BI stops at visibility',
+            'Klarity reveals execution',
+            'Klarity connects workflows, not just metrics'
+          ]
+        },
+        transformation: {
+          broken: `${company} may be relying on one-time consulting snapshots while operations continue changing underneath them.`,
+          narrative: `Klarity replaces static analysis with continuous operational intelligence.`,
+          talktrack: `Consultants give you a snapshot. Klarity gives you a live system. Your operations change constantly, so your intelligence should too.`,
+          question: `How often do your process insights stay relevant after a consulting engagement ends?`,
+          wins: [
+            'Consulting is periodic',
+            'Klarity is continuous',
+            'Consulting is expensive, Klarity compounds'
+          ]
+        }
+      };
+
+      const selected = content[scenario];
+
+      document.getElementById('broken').textContent = selected.broken;
+      document.getElementById('narrative').textContent = selected.narrative;
+      document.getElementById('talktrack').textContent = selected.talktrack;
+      document.getElementById('question').textContent = selected.question;
+      document.getElementById('wins').innerHTML = '<ul>' + selected.wins.map(item => `<li>${item}</li>`).join('') + '</ul>';
+
+      document.getElementById('output').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
